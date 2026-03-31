@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "SecureCLI Node.js TypeScript Project",
   "main": "dist/index.js",
+  "bin": {
+    "securecli": "./bin/securecli"
+  },
   "scripts": {
     "start:server": "ts-node src/server.ts",
     "build": "tsc",

@@ -80,6 +80,22 @@ npm run dev
 
 ---
 
+## 🤖 给 AI Agent 的使用指南 (For Claude & OpenClaw)
+
+本项目完全 **Agent-Native (对 AI 智能体原生支持)**。
+如果您是 Claude、OpenClaw 或 Cursor，请直接阅读根目录下的 [`AGENT.md`](./AGENT.md) 了解如何调用本工具。
+
+您只需在终端中执行如下命令即可控制用户的系统或网站：
+```bash
+# 控制网页抓取
+securecli web zhihu hot
+
+# 控制本地软件
+securecli local gimp --export image.png
+```
+
+---
+
 ## 🛠️ 进阶：如何把一个新网站变成 CLI？
 
 基于 OpenCLI 的架构，你不需要写复杂的爬虫代码。只需要在 `src/adapters/` 中添加一个简单的配置（YAML/JSON 格式即可）：
