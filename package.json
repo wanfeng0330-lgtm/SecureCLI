@@ -4,10 +4,11 @@
   "description": "SecureCLI Node.js TypeScript Project",
   "main": "dist/index.js",
   "scripts": {
+    "start:server": "ts-node src/server.ts",
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "cli",

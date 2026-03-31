@@ -97,27 +97,35 @@ const Dashboard: React.FC = () => {
               Agent 指令执行
             </h2>
             <div className="flex flex-col gap-3">
+              <div className="text-sm text-slate-400 mb-1">
+                输入自然语言或系统指令，例如查询热门内容：
+              </div>
               <input 
                 type="text" 
                 value={command}
                 onChange={(e) => setCommand(e.target.value)}
+                placeholder="例如: search --query='AI Agent'"
                 className="bg-slate-950 border border-slate-700 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500 font-mono"
               />
               <button 
                 onClick={executeCommand}
-                className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-lg shadow-blue-500/20"
               >
-                <Play className="w-4 h-4" /> 通过适配器运行
+                <Play className="w-4 h-4" /> 开始自动执行
               </button>
             </div>
           </div>
 
-          <div className="bg-slate-900 rounded-xl p-5 border border-slate-800 shadow-xl border-l-4 border-l-red-500">
+          <div className="bg-slate-900 rounded-xl p-5 border border-slate-800 shadow-xl border-l-4 border-l-red-500 relative overflow-hidden">
+            <div className="absolute top-0 right-0 bg-red-500/20 text-red-400 text-[10px] px-2 py-1 rounded-bl-lg font-bold">防护演示区</div>
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
               <ShieldAlert className="w-5 h-5 text-red-400" />
-              沙箱攻击模拟
+              沙箱攻击拦截模拟
             </h2>
             <div className="flex flex-col gap-3">
+              <div className="text-sm text-slate-400 mb-1">
+                模拟大模型被提示词注入后尝试读取系统密码文件：
+              </div>
               <textarea 
                 value={sandboxCode}
                 onChange={(e) => setSandboxCode(e.target.value)}
@@ -126,9 +134,9 @@ const Dashboard: React.FC = () => {
               />
               <button 
                 onClick={executeSandbox}
-                className="bg-red-900/50 hover:bg-red-800/80 text-red-200 border border-red-800 font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
+                className="bg-red-900/50 hover:bg-red-800/80 text-red-200 border border-red-800 font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-lg shadow-red-900/20"
               >
-                <Play className="w-4 h-4" /> 注入恶意代码
+                <Play className="w-4 h-4" /> 注入恶意代码测试
               </button>
             </div>
           </div>
