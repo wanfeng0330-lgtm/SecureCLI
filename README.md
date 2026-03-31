@@ -1,107 +1,81 @@
 <div align="center">
   <img src="https://img.shields.io/badge/Status-Active-brightgreen" alt="Status">
   <img src="https://img.shields.io/badge/License-MIT-blue" alt="License">
-  <h1>🛡️ SecureCLI</h1>
-  <p><strong>面向 AI Agent 的全场景安全 CLI 原生执行平台</strong></p>
-  <p>整合 <a href="https://github.com/jackwener/opencli">OpenCLI</a> 与 <a href="https://github.com/HKUDS/CLI-Anything">CLI-Anything</a> 核心技术，实现本地软件、Web 服务、桌面应用的全场景零代码 CLI 化。</p>
+  <h1>🛡️ SecureCLI: The AI Agent-Native Runtime</h1>
+  <p><strong>国内首个专为 AI Agent（智能体）打造的全场景安全原生执行底座</strong></p>
+  <p>整合 <a href="https://github.com/jackwener/opencli">OpenCLI</a> 与 <a href="https://github.com/HKUDS/CLI-Anything">CLI-Anything</a> 核心技术，赋予 LLM (如 Claude, OpenClaw, Cursor) 安全操作本地软件、Web 服务、桌面应用的“手脚”。</p>
 </div>
 
 ---
 
-## 🌟 核心亮点 (Highlights)
+## 🌟 核心价值：为什么 AI Agent 需要 SecureCLI？
 
-- 🔒 **全链路安全防护 (Account-safe & Sandboxed)**：事前静态分析，事中 Node.js 内核级沙箱拦截，确保 Agent 不会越权访问系统文件或执行危险命令。
-- 🌐 **Web/桌面应用一键 CLI 化 (Web & Electron CLI)**：基于 OpenCLI 双引擎架构，无缝复用 Chrome 登录态，无需破解验证码，零成本接入各类网站和系统。
-- 🖥️ **本地软件原生控制 (Local Tool Hub)**：集成 CLI-Anything 技术，将复杂的专业软件（如 Photoshop、OA系统等）降维转化为可编程的 CLI 命令。
-- 🤖 **Agent 原生优化 (AI-Native)**：专为大模型设计，自动去除冗余日志，输出结构化数据，极大提升 AI Agent 调用的成功率和效率。
-- 📊 **可视化态势感知大屏 (Visual Dashboard)**：提供直观的执行流水线与安全拦截展示，小白用户也能轻松掌控 AI 自动化流程。
+目前，当 AI Agent 尝试执行现实世界任务时，面临三大痛点：**能力受限（无法操作 GUI）、开发成本高（需手写爬虫）、风险不可控（恶意代码注入）**。
+
+SecureCLI 专为解决这些问题而生：
+- 🔒 **内核级安全沙箱**：内置事前扫描与事中 Node.js Proxy 拦截机制。即使 Agent 产生幻觉或被提示词注入（Prompt Injection）企图执行 `rm -rf` 等危险操作，也会被瞬间阻断，保障宿主机绝对安全。
+- 🤖 **纯正的 Agent-Native 接口**：输出确定性的、结构化的 JSON 结果，自动去除对 LLM 无用的长篇日志和色彩代码，极大降低 Token 消耗并提升 Agent 执行成功率。
+- 🌐 **Web/桌面应用免登录接管**：Agent 无需处理复杂的风控和验证码，SecureCLI 可直接复用用户本机的 Chrome 登录态接管目标网站。
+- 🖥️ **本地专业软件赋能**：将 GIMP、LibreOffice、Photoshop 等重度 GUI 软件降维转化为标准的 CLI 指令，让 Agent 拥有操作专业工具的能力。
 
 ---
 
-## 🚀 快速开始 (Quick Start)
+## 🚀 部署指南：如何为你的 AI Agent 装备 SecureCLI？
 
-### 前置要求 (Prerequisites)
-- **Node.js**: >= 18.0.0
-- **Python**: >= 3.10 (如果需要使用 CLI-Anything 的本地软件适配)
-- 推荐使用 Windows/macOS/Linux 主流系统
+如果你是一名开发者或正在构建自己的 Agent 系统，只需几步即可为你的 Agent 接入 SecureCLI：
 
-### 1. 安装与部署
-
-#### 方法一：克隆源码本地运行（推荐给开发者）
+### 1. 全局安装
+请在宿主机（你希望 Agent 运行的机器）上执行：
 ```bash
-# 1. 克隆仓库
+# 克隆并全局链接本项目
 git clone https://github.com/wanfeng0330-lgtm/SecureCLI.git
 cd SecureCLI
-
-# 2. 安装后端依赖
 npm install
+npm run build
+npm link
+```
+安装完成后，终端将提供全局命令 `securecli`。
 
-# 3. 安装前端大屏依赖
-cd dashboard && npm install && cd ..
+### 2. 授权 Agent 认知本工具 (极度重要)
+为了让你的 AI Agent（如 Claude Code, OpenClaw）知道如何使用本工具，你**必须**将本项目的系统指令提供给它。
+*   将根目录下的 [`AGENT.md`](./AGENT.md) 内容复制并追加到你的 Agent 系统提示词（System Prompt）中。
+*   或者在你的项目目录中创建一个 `.cursorrules` 文件，指向该文档。
+
+### 3. Agent 调用示例
+当 Agent 认知了该工具后，它会在需要时自动在终端执行如下命令：
+
+```bash
+# Agent 想要查询某个网站的数据（复用宿主机登录态）
+securecli web zhihu hot --limit 5
+
+# Agent 想要操作本地的图像处理软件
+securecli local gimp --export image.png --apply blur
 ```
 
-### 2. 启动平台
+---
 
-我们提供了一键启动的体验。你需要开启两个终端窗口：
+## 📊 开发者/评委观测大屏 (态势感知)
 
-**窗口一：启动 SecureCLI 安全调度引擎（后端）**
+虽然 SecureCLI 是在后台默默为 AI Agent 服务的，但为了方便**人类开发者调试**或在**比赛答辩中向评委展示安全拦截效果**，我们附带了一个可视化大屏。
+
+**启动大屏：**
 ```bash
+# 终端 1：启动安全调度服务
 npm run start:server
-# 默认运行在 http://localhost:4000
-```
 
-**窗口二：启动可视化态势感知大屏（前端）**
-```bash
-cd dashboard
-npm run dev
-# 默认运行在 http://localhost:5173
+# 终端 2：启动前端可视化大屏
+cd dashboard && npm run dev
 ```
-
-打开浏览器访问 `http://localhost:5173`，你将看到充满科技感的控制台大屏！
+打开 `http://localhost:5173`，您可以直观地看到 Agent 发出的每一条指令是如何经过“解析 -> 优化 -> 沙箱安全检查 -> 底层适配器执行”的全过程。
 
 ---
 
-## 🎮 怎么使用？(Usage for Everyone)
+## 🛠️ 进阶：教 Agent 掌控新软件 (零代码适配)
 
-### 场景 1：小白用户一键运行命令
-1. 打开 `http://localhost:5173`。
-2. 在左侧的 **“Agent 指令执行”** 框中，输入你想执行的命令（例如：`search --query="AI Agent"`）。
-3. 点击 **“通过适配器运行”**。
-4. 你可以在中间的**全链路执行追踪**中看到指令是如何被解析、优化、并安全通过沙箱的。右侧的终端会实时打印结果！
-
-### 场景 2：安全拦截演示（模拟黑客攻击）
-担心 AI Agent 被恶意提示词注入而破坏你的电脑？
-1. 在左下角的 **“沙箱攻击模拟”** 框中，输入恶意代码：
-   ```javascript
-   require("fs").readFileSync("/etc/passwd");
-   ```
-2. 点击 **“注入恶意代码”**。
-3. 平台会瞬间亮起红灯，并在右侧终端提示 **SECURITY ALERT (安全拦截警报)**，成功阻止恶意操作。
-
----
-
-## 🤖 给 AI Agent 的使用指南 (For Claude & OpenClaw)
-
-本项目完全 **Agent-Native (对 AI 智能体原生支持)**。
-如果您是 Claude、OpenClaw 或 Cursor，请直接阅读根目录下的 [`AGENT.md`](./AGENT.md) 了解如何调用本工具。
-
-您只需在终端中执行如下命令即可控制用户的系统或网站：
-```bash
-# 控制网页抓取
-securecli web zhihu hot
-
-# 控制本地软件
-securecli local gimp --export image.png
-```
-
----
-
-## 🛠️ 进阶：如何把一个新网站变成 CLI？
-
-基于 OpenCLI 的架构，你不需要写复杂的爬虫代码。只需要在 `src/adapters/` 中添加一个简单的配置（YAML/JSON 格式即可）：
+基于 OpenCLI 的架构，你可以轻松地将公司内部系统或新网站教给 Agent，**无需手写爬虫**。只需在 `src/adapters/` 中添加一个配置文件（YAML/JSON）：
 
 ```json
-// 示例：将公司内部 OA 系统的“待办任务”转为命令
+// 示例：让 Agent 学会操作公司内部 OA 系统
 {
   "appName": "company-oa",
   "commands": {
@@ -114,7 +88,7 @@ securecli local gimp --export image.png
   }
 }
 ```
-**原理**：系统会自动拉起浏览器，**复用你已经登录的账号状态**，直接抓取数据并返回给 Agent！
+配置完成后，Agent 即可直接调用 `securecli web company-oa todo` 获取结构化数据！
 
 ---
 
